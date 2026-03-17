@@ -1,0 +1,70 @@
+<div class="input-group mb-2">
+    <span class="input-group-text" id="addon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </span>
+    <input type="text" class="form-control" placeholder="Pretraga" [(ngModel)]="search" (keyup)="loadToys()">
+
+    <button class="btn btn-outline-secondary" type="button" (click)="showFilters = !showFilters">
+        <i class="fa-solid fa-filter"></i> Filteri
+    </button>
+</div>
+@if (showFilters) {
+<div class="row g-2 mb-4 p-3 bg-light rounded border shadow-sm">
+    <div class="col-md-3">
+        <label class="form-label small fw-bold">Kategorija</label>
+        <select class="form-select form-select-sm" [(ngModel)]="category" (change)="loadToys()">
+            <option [ngValue]="null">Sve</option>
+            @for (item of categories(); track $index) {
+                <option [value]="item.name" [title]="item.description"> {{ item.name }}</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label class="form-label small fw-bold">Uzrast</label>
+        <select class="form-select form-select-sm" [(ngModel)]="ageGroup" (change)="loadToys()">
+            <option [ngValue]="null">Svi uzrasti</option>
+            @for (item of ageGroups(); track $index) {
+                <option [value]="item.name" [title]="item.description"> {{ item.name }} god. </option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label class="form-label small fw-bold">Pol</label>
+        <select class="form-select form-select-sm" [(ngModel)]="targetGroup" (change)="loadToys()">
+            <option [ngValue]="null">Svi</option>
+            <option value="Dečak">Dečaci</option>
+            <option value="Devojčica">Devojčice</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label small fw-bold">Maksimalna cena (RSD)</label>
+        <input type="number" class="form-control form-select-sm" [(ngModel)]="price" (input)="loadToys()">
+    </div>
+
+</div>
+}
+
+
+<div class="toys">
+    @for (toy of toys(); track $index) {
+    <div class="card">
+        <img [src]="'https://toy.pequla.com/' + toy.imageUrl" class="card-img-top" [alt]="toy.name">
+        <div class="card-body">
+            <h5 class="card-title">{{toy.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{toy.type.name}}</h6>
+            <p class="card-text">{{toy.description}}</p>
+            <p class="card-text">{{toy.price}} RSD</p>
+        </div>
+        <div class="card-footer btn-group">
+            <a class="btn btn-sm btn-primary" [routerLink]="`/toy/${toy.permalink}`">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Detalji
+            </a>
+            <a class="btn btn-sm btn-success" [routerLink]="`/toy/${toy.permalink}/reservation`">
+                <i class="fa-solid fa-cart-shopping"></i> Rezerviši
+            </a>
+        </div>
+    </div>
+    }
+</div>

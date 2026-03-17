@@ -1,0 +1,105 @@
+<div class="card mb-3">
+    <div class="card-header">
+        <h5>Podaci o korisniku</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Ime:</th>
+                            <td>{{activeUser()?.firstName}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Prezime:</th>
+                            <td>{{activeUser()?.lastName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 col-md-6">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Email:</th>
+                            <td>{{activeUser()?.email}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Telefon:</th>
+                            <td>{{activeUser()?.phone}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <h5>Rezervacija i Porudžbine</h5>
+    </div>
+    @if (activeUser()!.data.length > 0) {
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Igračka</th>
+                    <th scope="col">Vreme</th>
+                    <th scope="col">Količina</th>
+                    <th scope="col">Cena</th>
+                    <th scope="col">Ukuno</th>                         
+                    <th scope="col">Status</th>
+                    <th scope="col">Opcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (order of activeUser()?.data; track $index) {
+                <tr>
+                    <th scope="row"><a [routerLink]="`/toy/${order.permalink}`">{{order.toyName}}</a></th>
+                    <td>{{order.time}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>{{order.price}}</td>
+                    <td>{{order.price*order.quantity}}</td>
+                    <td>{{statusMap[order.status]}}</td>
+                    <td>
+                        @if(order.status == 'na') {
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-primary" (click)="pay(order)">Plati</button>
+                            <button type="button" class="btn btn-sm btn-danger" (click)="cancel(order)">Otkaži</button>
+                        </div>
+                        }
+                        @if(order.status == 'paid') {
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-success" (click)="like(order)">Sviđa mi se</button>
+                            <button type="button" class="btn btn-sm btn-danger"(click)="dislike(order)">Ne sviđa mi se</button>
+                        </div>
+                        }
+                        @if(order.status == 'liked' ||order.status == 'disliked') {
+                        Ocena zabeležena!
+                        }
+                        @if(order.status == 'canceled') {
+                        <button type="button" class="btn btn-sm btn-danger"(click)="delete(order)">Obriši</button>
+                        }
+                    </td>
+                </tr>
+                }
+                
+            </tbody>
+            <tfoot class="table-group-divider">
+        <tr>
+            <td colspan="4" class="text-end fw-bold">Ukupno za uplatu:</td>
+            <td colspan="3" class="fw-bold text-primary">
+                {{ totalPrice() }} RSD
+            </td>
+        </tr>
+    </tfoot>
+        </table>
+
+    </div>
+    } @else {
+    <div class="card-body">
+        <p class="text-center">Još uvek nemate rezervisane proizvode!</p>
+    </div>
+    }
+</div>

@@ -1,0 +1,39 @@
+<div class="card login">
+    <div class="card-header">
+        <h5>Registracija</h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="firstName" class="form-label">Ime</label>
+                    <input type="text" class="form-control" id="firstName" formControlName="firstName">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="lastName" class="form-label">Prezime</label>
+                    <input type="text" class="form-control" id="lastName" formControlName="lastName">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Telefon</label>
+                <input type="text" class="form-control" id="phone" formControlName="phone">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" formControlName="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Lozinka</label>
+                <input type="password" class="form-control" id="password" formControlName="password">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fa-solid fa-user-plus"></i> Registruj se
+            </button>
+        </form>
+        <hr>
+        <div class="text-center">
+            <span>Već imate nalog?</span>
+            <button type="button" class="btn btn-link" routerLink="/login">Prijavite se</button>
+        </div>
+    </div>
+</div>

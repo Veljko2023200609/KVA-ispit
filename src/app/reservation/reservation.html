@@ -1,0 +1,40 @@
+@if (toy()) {
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a routerLink="/">Početna</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a [routerLink]="`/toy/${toy()?.permalink}`">
+                {{toy()?.name}}
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Reservation</li>
+    </ol>
+</nav>
+<div class="row">
+    <div class="col-12 col-md-4">
+        <img [src]="'https://toy.pequla.com/' + toy()?.imageUrl" [alt]="toy()?.name" class="img-fluid">
+    </div>
+    <div class="col-12 col-md-8">
+        <div class="card">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="card-header">
+                    <h5><i class="fa-solid fa-film"></i> {{toy()?.name}}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Broj Komada</label>
+                        <input type="number" class="form-control" id="quantity" formControlName="quantity">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary">
+                        <i class="fa-solid fa-cart-shopping"></i> Rezerviši Odmah
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+}

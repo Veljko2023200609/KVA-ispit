@@ -1,0 +1,39 @@
+@if (toy()) {
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a routerLink="/">Početna</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{toy()?.name}}</li>
+    </ol>
+</nav>
+<div class="row">
+    <div class="col-12 col-md-4">
+        <img [src]="'https://toy.pequla.com/' + toy()?.imageUrl" [alt]="toy()?.name" class="img-fluid">
+    </div>
+    <div class="col-12 col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4>{{toy()?.name}}</h4>
+            </div>
+            <div class="card-body">
+                <p [innerHTML]="toy()?.description"></p>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <h6>Uzrast: {{toy()?.ageGroup?.name}}</h6>
+                        <p>{{toy()?.ageGroup?.description}}</p>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <h6>Ciljna grupa: {{toy()?.targetGroup}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn btn-success" [routerLink]="`/toy/${toy()?.permalink}/reservation`">
+                    <i class="fa-solid fa-cart-shopping"></i> Rezerviši
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+}
